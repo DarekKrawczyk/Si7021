@@ -11,7 +11,7 @@ Pico SDK - https://www.raspberrypi.com/documentation/pico-sdk/index_doxygen.html
 Example use of this library is demonstrated in example.cpp file located in src\ folder.
 
 ## Constructor
-Default constructor, takes one argument which is utilized I2C controller. Using `i2c0` or `i2c1` macro is suffitient.
+Default constructor, takes one argument which is utilized I2C controller. Using `i2c0` or `i2c1` macro is sufficient.
 
     Si7021::Si7021  si7021(i2c0);
    
