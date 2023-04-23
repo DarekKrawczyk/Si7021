@@ -17,8 +17,10 @@ int main() {
     gpio_pull_up(1);
 
     Si7021::Si7021 si7021(i2c0);
-    si7021.setHeater(false);
+    si7021.setHeater(true);
     si7021.setResolution(Si7021::Resolution::RH11T11);
+    si7021.setHeaterConfig(Si7021::HeaterConfig::hc0100);
+    int counter = 0;
     while(true){
         printf("Si7021 Serial number: %#" PRIx64 "\n", si7021.askForSerialNumber());
         printf("Si7021 Firmware: %#x\n", si7021.askForFirmwareRev());
@@ -30,6 +32,11 @@ int main() {
         printf("Si7021 Heater status: %i\n", si7021.askForHeater());
         printf("Si7021 Heater config: %i\n", si7021.askForHeaterConfig());
         printf("-----------------------------------------------------\n");
+        if(counter++ == 20){
+            printf("Si7021 Heater and User register reset!\n");
+            si7021.resetRegister(Si7021::Heater);
+            si7021.resetRegister(Si7021::User);
+        }
         sleep_ms(1000);
     }
 }

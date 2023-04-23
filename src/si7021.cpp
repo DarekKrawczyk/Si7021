@@ -136,9 +136,10 @@ bool Si7021::Si7021::calculateCRC(uint8_t value){
     return true;
 }
 
-//TODO
+/// @brief Reset Si7021 module.
 void Si7021::Si7021::resetDevice(){
-
+    uint8_t command = SI7021_RESET;
+    i2c_write_blocking(_i2c, SI7021_ADR, &command, 1, true);
 }
 #pragma endregion
 #pragma region Register
@@ -302,21 +303,24 @@ bool Si7021::Si7021::setHeater(bool status){
 /// @param heater Heater configuration.
 /// @return True if operation was successful, false if not.
 bool Si7021::Si7021::setHeaterConfig(HeaterConfig heater){
-    return true;
-    //TODO
+    uint8_t newRegister = (uint8_t)heater;
+    _heaterConfiguration = heater;
+    bool returnValue = this->setRegister(newRegister, Register::Heater);
+    return returnValue;
 }
 
 /// @brief Ask Si7021 for current heater configuration.
 /// @return Heater configuration.
 Si7021::HeaterConfig Si7021::Si7021::askForHeaterConfig(){
-    return HeaterConfig::hc0000;
-    //TODO
+    uint8_t currentRegister = this->askForRegisterData(Register::Heater);
+    HeaterConfig reg = (HeaterConfig)currentRegister;
+    _heaterConfiguration = reg;
+    return reg;
 }
 
 /// @brief Heater configuration accessor.
 /// @return Heater configuration.
 Si7021::HeaterConfig Si7021::Si7021::getHeaterConfig() const{
     return _heaterConfiguration;
-    //TODO
 }
 #pragma endregion
