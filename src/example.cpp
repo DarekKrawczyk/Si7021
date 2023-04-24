@@ -16,6 +16,7 @@ int main() {
     gpio_pull_up(0);
     gpio_pull_up(1);
 
+
     Si7021::Si7021 si7021(i2c0);
     si7021.setHeater(true);
     si7021.setResolution(Si7021::Resolution::RH11T11);
